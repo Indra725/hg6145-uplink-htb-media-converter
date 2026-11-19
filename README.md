@@ -70,6 +70,8 @@ python auto-unlock.py --mac 946b12abcdef --dry-run     # simulasi, tanpa konek
 - PC & ONT dalam LAN yang sama
 - **Backup config ONT dulu** — modifikasi firmware berisiko
 
+**Opsi hosting dari STB (tanpa PC nyala):** jalankan HTTP server tools di STB Armbian Anda — lihat [`docs/stb-server-install.md`](docs/stb-server-install.md). Service `hg6145-tools` di port **8080**, path `/opt/hg6145-uplink`.
+
 > ⚠️ **Script ini BELUM diuji di perangkat nyata (RP4423).** Log lengkap sesi telnet ditampilkan di layar agar bisa dievaluasi manual. Jika perintah `wget` tidak dikenali (busybox lama), gunakan metode USB/tftp manual. Setelah jalan, buka `http://192.168.1.1` — bila custom webui muncul, unlock berhasil. Laporkan hasil via Issues (sensor MAC/password/serial dulu!).
 
 **Patch TR-069 (opsional tapi disarankan):** lihat [`docs/disable-tr069.md`](docs/disable-tr069.md). Tanpa patch ini, TR-069 otomatis re-enable setiap reboot dan bisa mengembalikan/menimpa setting Anda.

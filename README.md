@@ -49,11 +49,28 @@ Sumber: proyek *Fiberhome HG6145F1 Custom Webui* (numberonedz) — bundle di fol
 4. **Refresh** halaman → halaman custom webui aktif
    - Hasil modifikasi **tidak bertahan** setelah reboot — tapi setting yang diubah tetap tersimpan. Opsi persistence tersedia di WebUI Options.
 
-**Metode 2 — via Telnet:**
+**Metode 2 — via Telnet (manual):**
 1. Aktifkan telnet: ikuti [`docs/enable-telnet.md`](docs/enable-telnet.md) — `Security > ACL Settings`, login `gpon` / `Fh@XXXXXX` (`XXXXXX` = 6 karakter terakhir MAC)
 2. Upload `custom-webui.sh` ke direktori writable (mis. `/var`) via USB/tftp
 3. `chmod +x custom-webui.sh`
 4. Jalankan script
+
+**Metode 3 — Otomatis (`auto-unlock.py`, EXPERIMENTAL):**
+
+Repo ini menyediakan script otomasi satu-langkah: PC membuka HTTP server lokal untuk melayani `custom-webui.sh`, lalu script login telnet ke ONT, mengeksekusi `wget` + `chmod` + menjalankan unlock — tanpa perlu USB/tftp.
+
+```powershell
+python auto-unlock.py --mac 94:6b:12:ab:cd:ef          # MAC dari label belakang ONT
+python auto-unlock.py --mac 946b12abcdef --dry-run     # simulasi, tanpa konek
+```
+
+**Prasyarat:**
+- Python 3.6+ (tanpa dependency eksternal)
+- Telnet sudah diaktifkan (`Security > ACL Settings`) — [`docs/enable-telnet.md`](docs/enable-telnet.md)
+- PC & ONT dalam LAN yang sama
+- **Backup config ONT dulu** — modifikasi firmware berisiko
+
+> ⚠️ **Script ini BELUM diuji di perangkat nyata (RP4423).** Log lengkap sesi telnet ditampilkan di layar agar bisa dievaluasi manual. Jika perintah `wget` tidak dikenali (busybox lama), gunakan metode USB/tftp manual. Setelah jalan, buka `http://192.168.1.1` — bila custom webui muncul, unlock berhasil. Laporkan hasil via Issues (sensor MAC/password/serial dulu!).
 
 **Patch TR-069 (opsional tapi disarankan):** lihat [`docs/disable-tr069.md`](docs/disable-tr069.md). Tanpa patch ini, TR-069 otomatis re-enable setiap reboot dan bisa mengembalikan/menimpa setting Anda.
 

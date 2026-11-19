@@ -76,6 +76,8 @@ python auto-unlock.py --mac 946b12abcdef --dry-run     # simulasi, tanpa konek
 
 **Auto-unlock watcher (opsional, experimental):** STB menyapu LAN & unlock ONT baru otomatis — lihat [`docs/auto-unlock-service.md`](docs/auto-unlock-service.md). Default `MODE=monitor` (aman); aktifkan `MODE=unlock` hanya setelah diuji.
 
+**Verifikasi fitur uplink:** bukti & cara cek/set uplink via `get_uplink_info` / `set_uplink_info` — lihat [`docs/uplink-verification.md`](docs/uplink-verification.md). Ringkasnya: fitur ada di firmware (parameter `uplink_type`/`uplink_port`/`X_FH_LanUplinkPort`), tidak ada menu GUI, harus via console; belum teruji di unit nyata.
+
 > ⚠️ **Script ini BELUM diuji di perangkat nyata (RP4423).** Log lengkap sesi telnet ditampilkan di layar agar bisa dievaluasi manual. Jika perintah `wget` tidak dikenali (busybox lama), gunakan metode USB/tftp manual. Setelah jalan, buka `http://192.168.1.1` — bila custom webui muncul, unlock berhasil. Laporkan hasil via Issues (sensor MAC/password/serial dulu!).
 
 **Patch TR-069 (opsional tapi disarankan):** lihat [`docs/disable-tr069.md`](docs/disable-tr069.md). Tanpa patch ini, TR-069 otomatis re-enable setiap reboot dan bisa mengembalikan/menimpa setting Anda.
